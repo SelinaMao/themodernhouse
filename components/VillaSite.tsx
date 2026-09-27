@@ -254,7 +254,7 @@ export default function VillaSite() {
 
       <main id="top" className="px-4 md:px-8">
         {/* ---------- Hero ---------- */}
-        <div className="-mx-4 bg-jade text-jade-ink md:-mx-8">
+        <div className="-mx-4 bg-roof text-jade-ink md:-mx-8">
           <section className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
             <div className="max-w-2xl">
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-jade-ink/70">{t("hero_eyebrow", lang)}</p>
