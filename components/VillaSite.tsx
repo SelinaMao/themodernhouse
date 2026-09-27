@@ -79,7 +79,7 @@ function CopyButton({ text, lang, targetId }: { text: string; lang: Lang; target
 }
 
 export default function VillaSite() {
-  const [lang, setLang] = useState<Lang>("kh");
+  const [lang, setLang] = useState<Lang>("en");
   const [area, setArea] = useState<Area | "any">("any");
   const [type, setType] = useState<VillaType | "any">("any");
   const [beds, setBeds] = useState(0);
@@ -254,14 +254,14 @@ export default function VillaSite() {
 
       <main id="top" className="px-4 md:px-8">
         {/* ---------- Hero ---------- */}
-        <div className="-mx-4 bg-[#203c3e] text-white md:-mx-8">
+        <div className="-mx-4 bg-jade text-jade-ink md:-mx-8">
           <section className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
             <div className="max-w-2xl">
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/70">{t("hero_eyebrow", lang)}</p>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-jade-ink/70">{t("hero_eyebrow", lang)}</p>
               <h1 className={`mt-3 ${lang === "kh" ? "text-[26px] md:text-[36px]" : "text-[38px] md:text-[52px]"} ${hc}`}>
                 {t("hero_title", lang)}
               </h1>
-              <p className="mt-3 max-w-[56ch] text-[16px] text-white/85">{t("hero_sub", lang)}</p>
+              <p className="mt-3 max-w-[56ch] text-[16px] text-jade-ink/85">{t("hero_sub", lang)}</p>
               <HeroSearch
                 lang={lang}
                 type={type}
@@ -593,7 +593,7 @@ function Contact({ lang, hc }: { lang: Lang; hc: string }) {
     setReady(lines.join("\n"));
   };
 
-  const field = "rounded-md border border-line bg-bg px-3 py-2.5";
+  const field = "w-full rounded-xl border border-line bg-bg px-4 py-3.5 text-[15px] placeholder:text-muted";
 
   return (
     <section id="contact" className="scroll-mt-24 border-t border-line py-12">
@@ -648,17 +648,35 @@ function Contact({ lang, hc }: { lang: Lang; hc: string }) {
               </div>
             </div>
           ) : (
-            <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2" noValidate>
-              <label className="grid gap-1.5" htmlFor="c-name">
-                <span className="text-sm font-medium">{t("f_name", lang)} *</span>
-                <input id="c-name" value={form.name} onChange={set("name")} className={field} autoComplete="name" />
-              </label>
-              <label className="grid gap-1.5" htmlFor="c-phone">
-                <span className="text-sm font-medium">{t("f_phone", lang)} *</span>
-                <input id="c-phone" type="tel" value={form.phone} onChange={set("phone")} className={`${field} font-mono`} placeholder="0XX XXX XXX" autoComplete="tel" />
-              </label>
+            <form onSubmit={submit} className="grid gap-3" noValidate>
+              <label className="sr-only" htmlFor="c-name">{t("f_name", lang)}</label>
+              <input
+                id="c-name"
+                value={form.name}
+                onChange={set("name")}
+                className={field}
+                placeholder={`${t("f_name", lang)} *`}
+                autoComplete="name"
+              />
+
+              <div className="flex gap-2">
+                <span aria-hidden className="flex shrink-0 items-center gap-1.5 rounded-xl border border-line bg-bg px-3 text-sm text-muted">
+                  🇰🇭 +855
+                </span>
+                <label className="sr-only" htmlFor="c-phone">{t("f_phone", lang)}</label>
+                <input
+                  id="c-phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={set("phone")}
+                  className={`${field} font-mono`}
+                  placeholder={`${t("f_phone", lang)} * — 0XX XXX XXX`}
+                  autoComplete="tel"
+                />
+              </div>
+
               <label className="grid gap-1.5" htmlFor="c-villa">
-                <span className="text-sm font-medium">{t("f_villa", lang)}</span>
+                <span className="text-xs font-medium text-muted">{t("f_villa", lang)}</span>
                 <select id="c-villa" value={form.villa} onChange={set("villa")} className={field}>
                   {villas.filter((v) => v.status !== "sold").map((v) => (
                     <option key={v.id} value={v.id}>{v.name[lang]}</option>
@@ -666,17 +684,54 @@ function Contact({ lang, hc }: { lang: Lang; hc: string }) {
                 </select>
               </label>
               <label className="grid gap-1.5" htmlFor="c-date">
-                <span className="text-sm font-medium">{t("f_date", lang)}</span>
+                <span className="text-xs font-medium text-muted">{t("f_date", lang)}</span>
                 <input id="c-date" type="date" value={form.date} onChange={set("date")} className={field} />
               </label>
-              <label className="grid gap-1.5 sm:col-span-2" htmlFor="c-msg">
-                <span className="text-sm font-medium">{t("f_msg", lang)}</span>
-                <textarea id="c-msg" rows={3} value={form.msg} onChange={set("msg")} className={field} />
-              </label>
-              {error && <p className="text-sm text-sold sm:col-span-2">{t("f_need", lang)}</p>}
-              <button type="submit" className="rounded-md bg-jade px-5 py-3 font-medium text-jade-ink hover:opacity-90 sm:col-span-2">
+
+              <label className="sr-only" htmlFor="c-msg">{t("f_msg", lang)}</label>
+              <textarea
+                id="c-msg"
+                rows={3}
+                value={form.msg}
+                onChange={set("msg")}
+                className={field}
+                placeholder={t("f_msg", lang)}
+              />
+
+              {error && <p className="text-sm text-sold">{t("f_need", lang)}</p>}
+
+              <button type="submit" className="mt-1 rounded-xl bg-jade py-4 text-base font-semibold text-jade-ink hover:opacity-90">
                 {t("f_submit", lang)}
               </button>
+
+              <div className="my-1 flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-muted">
+                <span className="h-px flex-1 bg-line" />
+                {t("contact_via", lang)}
+                <span className="h-px flex-1 bg-line" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={`tel:${site.phone.replace(/\s+/g, "")}`}
+                  className="flex items-center justify-center gap-2 rounded-xl border border-line py-3 text-sm font-medium hover:border-jade"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M4 5c0 8.5 6.5 15 15 15l2-4-5-2-2 2c-2-1-4-3-5-5l2-2-2-5-4 1z" strokeLinejoin="round" />
+                  </svg>
+                  {t("phone", lang)}
+                </a>
+                <a
+                  href={tgUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-line py-3 text-sm font-medium hover:border-jade"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+                    <path d="M21.5 4.5 2.7 11.9c-1 .4-1 1.7.1 2l4.6 1.4 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.5 4.8 3.6c.7.5 1.8.1 2-.8l3-16.4c.2-1-.7-1.8-1.7-1.4Zm-3 3.4-7.6 6.9-.3 3.2-1.5-4.5 8.6-6.4c.3-.2.6.2.3.4z" />
+                  </svg>
+                  Telegram
+                </a>
+              </div>
             </form>
           )}
         </div>

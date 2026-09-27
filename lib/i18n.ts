@@ -104,6 +104,7 @@ const dict = {
   },
 
   contact_title: { kh: "កក់ពេលមកមើលផ្ទះ", en: "Book a site visit" },
+  contact_via: { kh: "ឬទាក់ទងតាម", en: "Or contact us via" },
   contact_sub: {
     kh: "បំពេញព័ត៌មាន រួចផ្ញើមកយើងតាម Telegram។ ភ្នាក់ងារនឹងឆ្លើយតបក្នុងម៉ោងធ្វើការ។",
     en: "Fill this in, then send it to us on Telegram. An agent replies during office hours.",
