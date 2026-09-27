@@ -19,29 +19,7 @@
   --sold: #9b3b35;
 }
 
-/* ---------- Dark (system) ---------- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #0e1513;
-    --surface: #16201d;
-    --ink: #e4ebe7;
-    --muted: #93a39d;
-    --line: #2d3b37;
-    --grid: rgba(93, 181, 156, 0.08);
-    --jade: #5db59c;
-    --jade-ink: #0c1412;
-    --brass: #d6ac5e;
-    --wall: #1f2c28;
-    --glass: #2f5049;
-    --roof: #9fb3ac;
-    --ok: #58c28b;
-    --warn: #e0a24f;
-    --sold: #e07b72;
-  }
-}
-
-/* ---------- Dark (explicit) ---------- */
+/* ---------- Dark (explicit only — no automatic prefers-color-scheme switch) ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #0e1513;
