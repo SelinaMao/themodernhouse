@@ -1,8 +1,8 @@
 import SectionHeading from "./SectionHeading";
 import { t } from "@/lib/i18n";
-import { freshListings, img, n, usd, type Lang } from "@/lib/villas";
+import { freshListings, img, n, usd, type Lang } from "@/lib/avatatr";
 
-export default function FreshListings({ lang, hc, onOpen, onSeeAll }: { lang: Lang; hc: string; onOpen: (id: string) => void; onSeeAll: () => void }) {
+export default function Avatar({ lang, hc, onOpen, onSeeAll }: { lang: Lang; hc: string; onOpen: (id: string) => void; onSeeAll: () => void }) {
   const list = freshListings(4);
   return (
     <section className="mx-auto max-w-6xl scroll-mt-24 border-t border-line py-12">
@@ -31,6 +31,9 @@ export default function FreshListings({ lang, hc, onOpen, onSeeAll }: { lang: La
                 <p className="num font-display text-2xl leading-none">{usd(v.price)}</p>
                 <p className="mt-1.5 text-sm font-medium">{v.name[lang]}</p>
                 <p className="text-xs text-muted">{v.location[lang]}</p>
+                <p className="num mt-1 text-xs text-muted">
+                  {n(v.landW, lang)}m x {n(v.landL, lang)}m · {n(v.beds, lang)} {t("beds", lang)}
+                </p>
               </div>
             </button>
           </li>

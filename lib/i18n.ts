@@ -1,4 +1,4 @@
-import type { Lang } from "./villas";
+import type { Lang } from "./avatatr";
 
 const dict = {
   nav_villas: { kh: "វីឡា", en: "Villas" },
@@ -145,7 +145,7 @@ const dict = {
 
   // ---- Fresh this week ----
   fresh_eyebrow: { kh: "ថ្មីៗសប្តាហ៍នេះ", en: "Fresh this week" },
-  fresh_title: { kh: "វីឡាចុះបញ្ជីថ្មីៗ", en: "The newest villas on the market" },
+  fresh_title: { kh: "វីឡាចុះបញ្ជីថ្មីៗ", en: "The newest villas on the market (AVATAR EXTERIOR)" },
   fresh_sub: {
     kh: "វីឡាទាំងអស់ដែលនៅសល់ ជាមួយអាយុនៃការចុះបញ្ជីពិត",
     en: "Every available villa, with its real listing age.",
@@ -157,7 +157,7 @@ const dict = {
 
   // ---- Just launched ----
   launched_eyebrow: { kh: "គម្រោងទើបចេញ", en: "Just launched" },
-  launched_title: { kh: "ជម្រើសផ្ទះតាមប្រភេទ", en: "Every product line, at launch pricing" },
+  launched_title: { kh: "មាយូរា អង្គករ", en: " Mayura Angkor Realestate " },
   launched_badge: { kh: "គម្រោងថ្មី", en: "New project" },
   launched_from: { kh: "ចាប់ពី", en: "from" },
   see_all_types: { kh: "មើលគ្រប់ប្រភេទ", en: "All product lines" },

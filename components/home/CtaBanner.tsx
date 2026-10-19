@@ -1,6 +1,6 @@
 import { t } from "@/lib/i18n";
 import { site } from "@/lib/site";
-import type { Lang } from "@/lib/villas";
+import type { Lang } from "@/lib/avatatr";
 
 export default function CtaBanner({ lang, hc }: { lang: Lang; hc: string }) {
   const tgUrl = `https://t.me/${site.telegram}`;

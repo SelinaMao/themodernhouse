@@ -19,13 +19,13 @@ npm run build    # production build
 ## Edit your content
 - `public/logo.png` — logo
 - `lib/site.ts` — brand name, Telegram username, phone, office address, hours
-- `lib/villas.ts` — villa listings (name, price, land size, beds, status, features…)
+- `lib/avatatr.ts` — villa listings (name, price, land size, beds, status, features…)
 - `lib/i18n.ts` — all Khmer / English text
 - `app/globals.css` — colours (design tokens) and fonts
 
 ## Photos
 Villa photos live in `public/villas/`. To add or change one, put the image there and set the villa's `image`
-field in `lib/villas.ts` (e.g. `image: "villas/my-villa.jpg"`). Landscape photos around 1400 px wide work best;
+field in `lib/avatatr.ts` (e.g. `image: "villas/my-villa.jpg"`). Landscape photos around 1400 px wide work best;
 cards crop them to 4:3.
 
 ## Receiving form submissions

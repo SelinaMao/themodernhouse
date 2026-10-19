@@ -1,6 +1,6 @@
 import SectionHeading from "./SectionHeading";
 import { t } from "@/lib/i18n";
-import { areaStats, n, usd, type Area, type Lang } from "@/lib/villas";
+import { areaStats, n, usd, type Area, type Lang } from "@/lib/avatatr";
 
 export default function ExploreDistricts({ lang, hc, onSelectArea }: { lang: Lang; hc: string; onSelectArea: (a: Area) => void }) {
   const stats = areaStats();

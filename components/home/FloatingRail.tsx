@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
-import type { Lang } from "@/lib/villas";
+import type { Lang } from "@/lib/avatatr";
 import { t } from "@/lib/i18n";
 
 export default function FloatingRail({ lang }: { lang: Lang }) {

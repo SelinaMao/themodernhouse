@@ -4,13 +4,14 @@ export type L = { kh: string; en: string };
 export type VillaType = "single" | "queen" | "king" | "link";
 export type Variant = "modern" | "twin" | "tropical" | "khmer";
 export type Status = "available" | "reserved" | "sold";
-export type Area = "chroy_changvar" | "sen_sok" | "chbar_ampov" | "por_senchey";
+export type Area = "techo_airport";
 
 export type Villa = {
   id: string;
   name: L;
   type: VillaType;
   image: string; // file in /public
+  images?: string[]; // optional gallery for the detail popup slider; falls back to [image]
   area: Area;
   location: L;
   price: number; // USD
@@ -34,24 +35,26 @@ export const VILLA_TYPES: VillaType[] = ["single", "queen", "king", "link"];
 /** Base path for images: "/" in Next.js, overridden for the single-file preview */
 export const IMG_BASE = process.env.NEXT_PUBLIC_IMG_BASE ?? "/";
 export const img = (v: Villa) => IMG_BASE + v.image;
+export const imgs = (v: Villa) => (v.images?.length ? v.images : [v.image]).map((i) => IMG_BASE + i);
 
 // Sample prices and specs — replace with your project's real figures.
-export const villas: Villa[] = [
+export const AVATAR_EXTERIOR: Villa[] = [
   {
     id: "single",
-    name: { kh: "វីឡាទោល", en: "Single Villa" },
+    name: { kh: "អវតារ វីឡា", en: " Avatar Villa" },
     type: "single",
-    image: "villas/single.jpg",
-    area: "chroy_changvar",
-    location: { kh: "ជ្រោយចង្វារ, ភ្នំពេញ", en: "Chroy Changvar, Phnom Penh" },
-    price: 80000,
+    image: "villas/avata01.png",
+    images: ["villas/avata01.png", "villas/avata04.png", "villas/avatashowroom.png", "villas/home-avata.png"],
+    area: "techo_airport",
+    location: { kh: "ជិតអាកាសយានដ្ឋានតេជោ, ភ្នំពេញ", en: "Near Techo International Airport, Phnom Penh" },
+    price: 67300,
     landW: 10,
-    landL: 20,
+    landL: 15,
     built: 220,
     floors: 2,
-    beds: 4,
-    baths: 4,
-    parking: 2,
+    beds: 3,
+    baths: 3,
+    parking: 1,
     title: "hard",
     status: "available",
     handover: { kh: "ត្រីមាសទី២ ឆ្នាំ២០២៧", en: "Q2 2027" },
@@ -60,26 +63,27 @@ export const villas: Villa[] = [
       en: "A two-storey single villa with a modern flat roof, covered car porch, wide balcony and broad concrete roads inside the borey.",
     },
     features: {
-      kh: ["យ៉ររថយន្តក្នុងផ្ទះ", "រានហាលធំជាន់លើ", "បុរីមានរបង និងសន្តិសុខ ២៤ ម៉ោង", "ផ្លូវធំក្នុងបុរី"],
-      en: ["Covered car porch", "Large upstairs balcony", "Gated borey, 24-hour security", "Wide internal roads"],
+      kh: ["ទំហំផ្ទះ ៧ម x ៧ម", "យ៉ររថយន្តក្នុងផ្ទះ", "រានហាលធំជាន់លើ", "បុរីមានរបង និងសន្តិសុខ ២៤ ម៉ោង", "ផ្លូវធំក្នុងបុរី"],
+      en: ["Size: 7m x 7m", "Covered car porch", "Large upstairs balcony", "Gated borey, 24-hour security", "Wide internal roads"],
     },
     listedDaysAgo: 2,
   },
   {
     id: "queen",
-    name: { kh: "វីឡាឃ្វីន", en: "Queen Villa" },
+    name: { kh: "អវតារ វីឡា", en: "Avatar Villa" },
     type: "queen",
-    image: "villas/queen.jpg",
-    area: "sen_sok",
-    location: { kh: "សែនសុខ, ភ្នំពេញ", en: "Sen Sok, Phnom Penh" },
-    price: 125000,
-    landW: 12,
-    landL: 22,
+    image: "villas/avatashowroom.png",
+    images: ["villas/avatashowroom.png", "villas/avata01.png", "villas/avata04.png", "villas/home-avata.png"],
+    area: "techo_airport",
+    location: { kh: "ជិតអាកាសយានដ្ឋានតេជោ, ភ្នំពេញ", en: "Near Techo International Airport, Phnom Penh" },
+    price: 67300,
+    landW: 10,
+    landL: 15,
     built: 280,
     floors: 2,
-    beds: 4,
-    baths: 5,
-    parking: 2,
+    beds: 3,
+    baths: 3,
+    parking: 1,
     title: "hard",
     status: "available",
     handover: { kh: "ស្នាក់នៅបានភ្លាម", en: "Ready to move in" },
@@ -88,26 +92,27 @@ export const villas: Villa[] = [
       en: "A completed villa with a four-sided tiled roof, tall front columns, a steel gate and a small front garden. You can view the finished house today.",
     },
     features: {
-      kh: ["សាងសង់រួច មើលផ្ទះពិតបាន", "ដំបូលក្បឿង", "ថ្មក្រាលជញ្ជាំងមុខផ្ទះ", "ភ្លើងបំភ្លឺផ្លូវសូឡា"],
-      en: ["Completed, view the real house", "Tiled hip roof", "Stone-clad facade", "Solar street lights"],
+      kh: ["ទំហំផ្ទះ ៧ម x ៧ម", "សាងសង់រួច មើលផ្ទះពិតបាន", "ដំបូលក្បឿង", "ថ្មក្រាលជញ្ជាំងមុខផ្ទះ", "ភ្លើងបំភ្លឺផ្លូវសូឡា"],
+      en: ["Size: 7m x 7m", "Completed, view the real house", "Tiled hip roof", "Stone-clad facade", "Solar street lights"],
     },
     listedDaysAgo: 3,
   },
   {
     id: "king",
-    name: { kh: "វីឡាឃីង", en: "King Villa" },
+    name: { kh: "អវតារ វីឡា", en: "Avatar Villa" },
     type: "king",
-    image: "villas/king.jpg",
-    area: "chbar_ampov",
-    location: { kh: "ភ្នំពេញ", en: "Phnom Penh" },
-    price: 140000,
-    landW: 16,
-    landL: 25,
+    image: "villas/home-avata.png",
+    images: ["villas/home-avata.png", "villas/avata01.png", "villas/avata04.png", "villas/avatashowroom.png"],
+    area: "techo_airport",
+    location: { kh: "ជិតអាកាសយានដ្ឋានតេជោ, ភ្នំពេញ", en: "Near Techo International Airport, Phnom Penh" },
+    price: 67300,
+    landW: 10,
+    landL: 15,
     built: 480,
     floors: 3,
-    beds: 6,
-    baths: 7,
-    parking: 3,
+    beds: 3,
+    baths: 3,
+    parking: 1,
     title: "hard",
     status: "reserved",
     handover: { kh: "ត្រីមាសទី៤ ឆ្នាំ២០២៦", en: "Q4 2026" },
@@ -116,22 +121,23 @@ export const villas: Villa[] = [
       en: "A three-storey villa with a blue tiled roof, classical columns and a grand arched fence and gate, planned for multi-generation families.",
     },
     features: {
-      kh: ["ដីធំ ១៦ × ២៥ ម", "ក្លោងទ្វារដែកចម្លាក់", "រានហាលគ្រប់ជាន់", "ចំណតរថយន្ត ៣ គ្រឿង"],
-      en: ["Large 16 × 25 m plot", "Ornamental steel gate", "Balconies on every floor", "Parking for 3 cars"],
+      kh: ["ទំហំផ្ទះ ៧ម x ៧ម", "ក្លោងទ្វារដែកចម្លាក់", "រានហាលគ្រប់ជាន់", "ចំណតរថយន្ត ១ គ្រឿង"],
+      en: ["Size: 7m x 7m", "Ornamental steel gate", "Balconies on every floor", "Parking for 1 car"],
     },
     listedDaysAgo: 6,
   },
   {
     id: "link-modern",
-    name: { kh: "Avatar", en: "Avatar" },
+    name: { kh: "អវតារ វីឡា", en: "Avatar Villa" },
     type: "link",
-    image: "villas/link-modern.jpg",
-    area: "por_senchey",
-    location: { kh: "ពោធិ៍សែនជ័យ, ភ្នំពេញ", en: "Por Senchey, Phnom Penh" },
-    price: 60000,
-    landW: 6,
-    landL: 20,
-    built: 190,
+    image: "villas/02.png",
+    images: ["villas/02.png", "villas/02 (2).png", "villas/02 (3).png"],
+    area: "techo_airport",
+    location: { kh: "ជិតអាកាសយានដ្ឋានតេជោ, ពោធិ៍សែនជ័យ, ភ្នំពេញ", en: "Near Techo International Airport, Por Senchey, Phnom Penh" },
+    price: 67300,
+    landW: 10,
+    landL: 15,
+    built: 98,
     floors: 2,
     beds: 3,
     baths: 3,
@@ -140,12 +146,12 @@ export const villas: Villa[] = [
     status: "available",
     handover: { kh: "ត្រីមាសទី១ ឆ្នាំ២០២៧", en: "Q1 2027" },
     blurb: {
-      kh: "ផ្ទះល្វែងរចនាបែបខ្សែកោង បង្អួចក្លោងធំ រានហាលកញ្ចក់ និងភ្លើងបំភ្លឺមុខផ្ទះពេលយប់។",
-      en: "A link house with curved lines, tall arched windows, a glass balcony and warm facade lighting at night.",
+      kh: "ផ្ទះល្វែងរចនាបែបខ្សែកោង បង្អួចក្លោងធំ រានហាលកញ្ចក់ និងភ្លើងបំភ្លឺមុខផ្ទះពេលយប់។ ទីតាំងត្រឹម ១៥ នាទីពីអាកាសយានដ្ឋានតេជោ។",
+      en: "A link house with curved lines, tall arched windows, a glass balcony and warm facade lighting at night. Only 15 minutes from Techo International Airport.",
     },
     features: {
-      kh: ["រានហាលកញ្ចក់", "បង្អួចក្លោងកម្ពស់ពីរជាន់", "របងមុខផ្ទះ", "ជិតផ្លូវជាតិលេខ ៤"],
-      en: ["Glass balcony", "Double-height arched window", "Gated front yard", "Near National Road 4"],
+      kh: ["ទំហំដី ១០ម x ១៥ម", "ទំហំផ្ទះ ៧ម x ៧ម", "ចំណតឡាន ៦.៥០ម", "ចម្ងាយចំហៀងផ្ទះ ១.៣០ម", "ដីខាងក្រោយសល់ ១.៥០ម", "របងព័ទ្ធជុំវិញទាំង៤ជ្រុង", "ត្រឹម១៥នាទីពីអាកាសយានដ្ឋានតេជោ"],
+      en: ["Land size 10m x 15m", "House footprint 7m x 7m", "Parking space 6.50m", "Side setback 1.30m", "Rear yard 1.50m", "Fenced on all 4 sides", "15 minutes from Techo International Airport"],
     },
     listedDaysAgo: 4,
   },
@@ -153,10 +159,11 @@ export const villas: Villa[] = [
     id: "link-arch",
     name: { kh: "មយួរ៉ាអង្គរ", en: "Mayura Angkor" },
     type: "link",
-    image: "villas/link-arch.jpg",
-    area: "por_senchey",
-    location: { kh: "ពោធិ៍សែនជ័យ, ភ្នំពេញ", en: "Por Senchey, Phnom Penh" },
-    price: 21900,
+    image: "villas/05.png",
+    images: ["villas/05.png", "villas/05 (2).png", "villas/mayura/mayura01.jpg", "villas/mayura/mayura02.jpg", "villas/mayura/mayura03.jpg", "villas/mayura/mayuramode.jpg", "villas/mayura/shop.jpg"],
+    area: "techo_airport",
+    location: { kh: "ជិតអាកាសយានដ្ឋានតេជោ, ពោធិ៍សែនជ័យ, ភ្នំពេញ", en: "Near Techo International Airport, Por Senchey, Phnom Penh" },
+    price: 67300,
     landW: 4.5,
     landL: 16,
     built: 130,
@@ -180,10 +187,7 @@ export const villas: Villa[] = [
 ];
 
 export const areas: { id: Area; name: L }[] = [
-  { id: "chroy_changvar", name: { kh: "ជ្រោយចង្វារ", en: "Chroy Changvar" } },
-  { id: "sen_sok", name: { kh: "សែនសុខ", en: "Sen Sok" } },
-  { id: "chbar_ampov", name: { kh: "ច្បារអំពៅ", en: "Chbar Ampov" } },
-  { id: "por_senchey", name: { kh: "ពោធិ៍សែនជ័យ", en: "Por Senchey" } },
+  { id: "techo_airport", name: { kh: "អាកាសយានដ្ឋានតេជោ", en: "Techo International Airport" } },
 ];
 
 const khDigits = ["០", "១", "២", "៣", "៤", "៥", "៦", "៧", "៨", "៩"];
@@ -209,7 +213,7 @@ export type AreaStat = { id: Area; name: L; count: number; medianPrice: number; 
 export function areaStats(): AreaStat[] {
   return areas
     .map((a) => {
-      const list = villas.filter((v) => v.area === a.id);
+      const list = AVATAR_EXTERIOR.filter((v) => v.area === a.id);
       return {
         id: a.id,
         name: a.name,
@@ -226,14 +230,14 @@ export type TypeStat = { type: VillaType; fromPrice: number; sample: Villa; coun
 /** One representative (cheapest) villa per product line, cheapest line first. */
 export function typeSummary(): TypeStat[] {
   return VILLA_TYPES.map((ty) => {
-    const list = villas.filter((v) => v.type === ty).sort((a, b) => a.price - b.price);
+    const list = AVATAR_EXTERIOR.filter((v) => v.type === ty).sort((a, b) => a.price - b.price);
     return { type: ty, fromPrice: list[0].price, sample: list[0], count: list.length };
   }).sort((a, b) => a.fromPrice - b.fromPrice);
 }
 
 /** Newest non-sold listings first, for the "fresh this week" grid. */
 export function freshListings(limit = 4): Villa[] {
-  return villas
+  return AVATAR_EXTERIOR
     .filter((v) => v.status !== "sold")
     .sort((a, b) => a.listedDaysAgo - b.listedDaysAgo)
     .slice(0, limit);
@@ -242,7 +246,7 @@ export function freshListings(limit = 4): Villa[] {
 export type MarketStats = { available: number; minPrice: number; maxPrice: number; districts: number; soonest: L };
 
 export function marketStats(): MarketStats {
-  const live = villas.filter((v) => v.status !== "sold");
+  const live = AVATAR_EXTERIOR.filter((v) => v.status !== "sold");
   const prices = live.map((v) => v.price);
   const soonest = live.slice().sort((a, b) => a.listedDaysAgo - b.listedDaysAgo)[0];
   return {

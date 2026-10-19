@@ -1,5 +1,5 @@
 import { t } from "@/lib/i18n";
-import { areaStats, img, n, usd, villas, type Area, type Lang } from "@/lib/villas";
+import { areaStats, img, n, usd, AVATAR_EXTERIOR, type Area, type Lang } from "@/lib/avatatr";
 
 export default function NeighborhoodSpotlight({
   lang,
@@ -13,7 +13,7 @@ export default function NeighborhoodSpotlight({
   onBookVisit: () => void;
 }) {
   const stat = areaStats()[0];
-  const photo = villas.find((v) => v.area === stat.id) ?? villas[0];
+  const photo = AVATAR_EXTERIOR.find((v) => v.area === stat.id) ?? AVATAR_EXTERIOR[0];
 
   return (
     <section className="mx-auto max-w-6xl scroll-mt-24 border-t border-line py-12">

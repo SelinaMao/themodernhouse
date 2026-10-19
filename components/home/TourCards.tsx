@@ -1,9 +1,9 @@
 import SectionHeading from "./SectionHeading";
 import { t } from "@/lib/i18n";
-import { img, n, usd, villas, type Lang } from "@/lib/villas";
+import { img, n, usd, AVATAR_EXTERIOR, type Lang } from "@/lib/avatatr";
 
 export default function TourCards({ lang, hc, onOpen }: { lang: Lang; hc: string; onOpen: (id: string) => void }) {
-  const list = villas.filter((v) => v.status !== "sold").slice(0, 4);
+  const list = AVATAR_EXTERIOR.filter((v) => v.status !== "sold").slice(0, 4);
   return (
     <section className="mx-auto max-w-6xl scroll-mt-24 border-t border-line py-12">
       <SectionHeading index={n("05", lang)} eyebrow={t("tour_eyebrow", lang)} title={t("tour_title", lang)} hc={hc} />

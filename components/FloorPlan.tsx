@@ -1,5 +1,5 @@
 import { t, type Key } from "@/lib/i18n";
-import { n, type Lang, type Villa } from "@/lib/villas";
+import { n, type Lang, type Villa } from "@/lib/avatatr";
 
 type Room = { key: Key; w: number; num?: number };
 type Plan = { name: string; rows: Room[][] };

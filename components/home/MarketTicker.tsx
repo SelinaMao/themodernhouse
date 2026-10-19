@@ -1,5 +1,5 @@
 import { t } from "@/lib/i18n";
-import { marketStats, n, usd, type Lang } from "@/lib/villas";
+import { marketStats, n, usd, type Lang } from "@/lib/avatatr";
 
 export default function MarketTicker({ lang }: { lang: Lang }) {
   const stats = marketStats();

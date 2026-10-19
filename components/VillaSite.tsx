@@ -2,11 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import FloorPlan from "./FloorPlan";
-import PaymentPlan, { monthlyPayment } from "./PaymentPlan";
+import PaymentPlan from "./PaymentPlan";
 import HeroSearch from "./home/HeroSearch";
 import MarketTicker from "./home/MarketTicker";
-import FreshListings from "./home/FreshListings";
-import JustLaunched from "./home/JustLaunched";
+import Avatar from "./home/Avatar";
+import MayuraAngkor from "./home/MayuraAngkor";
 import PriceTable from "./home/PriceTable";
 import ExploreDistricts from "./home/ExploreDistricts";
 import NeighborhoodSpotlight from "./home/NeighborhoodSpotlight";
@@ -16,31 +16,22 @@ import CtaBanner from "./home/CtaBanner";
 import WelcomeBack from "./home/WelcomeBack";
 import LinkDirectory from "./home/LinkDirectory";
 import FloatingRail from "./home/FloatingRail";
+import VillaListing, { StatusPill } from "./home/VillaListing";
 import { t, type Key } from "@/lib/i18n";
 import { site } from "@/lib/site";
-import { areas, img, IMG_BASE, n, usd, villas, VILLA_TYPES, type Area, type Lang, type Villa, type VillaType } from "@/lib/villas";
+import { imgs, IMG_BASE, n, usd, AVATAR_EXTERIOR, type Area, type Lang, type Villa, type VillaType } from "@/lib/avatatr";
 
-const TYPES = VILLA_TYPES;
 const MAX_BUDGET = 450000;
 const tgUrl = `https://t.me/${site.telegram}`;
+
+const HERO_IMAGES = [
+  ...AVATAR_EXTERIOR.filter((v) => v.id !== "link-arch").map((v) => v.image),
+  ...(AVATAR_EXTERIOR.find((v) => v.id === "link-arch")?.images ?? []),
+];
 const LAST_VIEWED_KEY = "mho1_last_viewed";
 
 function headingClass(lang: Lang) {
   return lang === "kh" ? "font-moul font-normal leading-[1.75]" : "font-display font-normal leading-[1.05] tracking-[-0.01em]";
-}
-
-function StatusPill({ status, lang }: { status: Villa["status"]; lang: Lang }) {
-  const cls = {
-    available: "text-ok border-ok",
-    reserved: "text-warn border-warn",
-    sold: "text-sold border-sold",
-  }[status];
-  return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border bg-surface px-2.5 py-0.5 text-xs font-medium ${cls}`}>
-      <span className="h-1.5 w-1.5 rounded-full bg-current" />
-      {t(`status_${status}` as Key, lang)}
-    </span>
-  );
 }
 
 function CopyButton({ text, lang, targetId }: { text: string; lang: Lang; targetId?: string }) {
@@ -91,8 +82,14 @@ export default function VillaSite() {
   const [lastViewedId, setLastViewedId] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
   const langMenuRef = useRef<HTMLDivElement>(null);
+  const [heroSlide, setHeroSlide] = useState(0);
 
   const hc = headingClass(lang);
+
+  useEffect(() => {
+    const id = setInterval(() => setHeroSlide((i) => (i + 1) % HERO_IMAGES.length), 4500);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (!langOpen) return;
@@ -122,7 +119,7 @@ export default function VillaSite() {
 
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return villas
+    return AVATAR_EXTERIOR
       .filter((v) => (area === "any" || v.area === area) && (type === "any" || v.type === type))
       .filter((v) => v.beds >= beds && v.price <= budget)
       .filter((v) => !availableOnly || v.status === "available")
@@ -130,8 +127,8 @@ export default function VillaSite() {
       .sort((a, b) => Number(a.status === "sold") - Number(b.status === "sold") || a.price - b.price);
   }, [area, type, beds, budget, availableOnly, query]);
 
-  const openVilla = villas.find((v) => v.id === openId) ?? null;
-  const lastViewedVilla = villas.find((v) => v.id === lastViewedId) ?? null;
+  const openVilla = AVATAR_EXTERIOR.find((v) => v.id === openId) ?? null;
+  const lastViewedVilla = AVATAR_EXTERIOR.find((v) => v.id === lastViewedId) ?? null;
 
   const resetFilters = () => {
     setArea("any");
@@ -170,7 +167,7 @@ export default function VillaSite() {
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-5">
           <a href="#top" className="flex shrink-0 items-center rounded-md bg-white px-1.5 py-1" aria-label={site.brand[lang]}>
-            <img src={`${IMG_BASE}logo.png`} alt={site.brand[lang]} className="h-11 w-auto" />
+            <img src={`${IMG_BASE}logo.png`} alt={site.brand[lang]} className="h-14 w-auto" />
           </a>
           <nav className="hidden shrink-0 items-center gap-6 text-sm font-medium text-ink lg:flex" aria-label="Main">
             {[
@@ -217,17 +214,14 @@ export default function VillaSite() {
                 aria-expanded={langOpen}
                 className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-medium hover:border-jade"
               >
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M3 12h18M12 3c2.5 2.5 3.8 5.8 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.8-3.8-9s1.3-6.5 3.8-9z" />
-                </svg>
+                <img src={`${IMG_BASE}flags/${lang === "kh" ? "km" : "en"}.svg`} alt="" className="h-3.5 w-3.5 rounded-full object-cover" />
                 {lang === "kh" ? "ខ្មែរ" : "EN"}
                 <svg viewBox="0 0 24 24" className="h-3 w-3 opacity-60" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                   <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               {langOpen && (
-                <ul role="listbox" className="absolute right-0 top-full z-10 mt-1.5 w-28 overflow-hidden rounded-md border border-line bg-surface py-1 text-sm shadow-lg">
+                <ul role="listbox" className="absolute right-0 top-full z-10 mt-1.5 w-36 overflow-hidden rounded-md border border-line bg-surface py-1 text-sm shadow-lg">
                   {(["kh", "en"] as Lang[]).map((l) => (
                     <li key={l} role="option" aria-selected={lang === l}>
                       <button
@@ -236,9 +230,15 @@ export default function VillaSite() {
                           setLang(l);
                           setLangOpen(false);
                         }}
-                        className={`block w-full px-3 py-1.5 text-left hover:bg-wall ${lang === l ? "font-medium text-jade" : ""}`}
+                        className={`flex w-full items-center gap-2 px-3 py-1.5 text-left hover:bg-wall ${lang === l ? "font-medium text-jade" : ""}`}
                       >
-                        {l === "kh" ? "ខ្មែរ" : "English"}
+                        <img src={`${IMG_BASE}flags/${l === "kh" ? "km" : "en"}.svg`} alt="" className="h-4 w-4 rounded-full object-cover" />
+                        <span className="flex-1">{l === "kh" ? "ខ្មែរ" : "English"}</span>
+                        {lang === l && (
+                          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                            <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
                       </button>
                     </li>
                   ))}
@@ -254,14 +254,25 @@ export default function VillaSite() {
 
       <main id="top" className="px-4 md:px-8">
         {/* ---------- Hero ---------- */}
-        <div className="-mx-4 bg-roof text-jade-ink md:-mx-8">
-          <section className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
+        <div className="relative -mx-4 flex min-h-[calc(100svh-4rem)] flex-col justify-center bg-black text-white md:-mx-8">
+          <div className="absolute inset-0">
+            {HERO_IMAGES.map((src, i) => (
+              <img
+                key={src}
+                src={IMG_BASE + src}
+                alt=""
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${i === heroSlide ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
+            <div className="absolute inset-0 bg-black/55" />
+          </div>
+          <section className="relative mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
             <div className="max-w-2xl">
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-jade-ink/70">{t("hero_eyebrow", lang)}</p>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/70">{t("hero_eyebrow", lang)}</p>
               <h1 className={`mt-3 ${lang === "kh" ? "text-[26px] md:text-[36px]" : "text-[38px] md:text-[52px]"} ${hc}`}>
                 {t("hero_title", lang)}
               </h1>
-              <p className="mt-3 max-w-[56ch] text-[16px] text-jade-ink/85">{t("hero_sub", lang)}</p>
+              <p className="mt-3 max-w-[56ch] text-[16px] text-white/85">{t("hero_sub", lang)}</p>
               <HeroSearch
                 lang={lang}
                 type={type}
@@ -279,8 +290,8 @@ export default function VillaSite() {
           <MarketTicker lang={lang} />
         </div>
 
-        <FreshListings lang={lang} hc={hc} onOpen={setOpenId} onSeeAll={scrollToVillas} />
-        <JustLaunched lang={lang} hc={hc} onOpen={setOpenId} onSeeAll={scrollToVillas} />
+        <Avatar lang={lang} hc={hc} onOpen={setOpenId} onSeeAll={scrollToVillas} />
+        <MayuraAngkor lang={lang} hc={hc} onOpen={setOpenId} onSeeAll={scrollToVillas} />
         <PriceTable lang={lang} hc={hc} onSelectArea={selectAreaAndBrowse} />
         <ExploreDistricts lang={lang} hc={hc} onSelectArea={selectAreaAndBrowse} />
         <NeighborhoodSpotlight
@@ -293,127 +304,24 @@ export default function VillaSite() {
         <MarketNews lang={lang} hc={hc} onSeeAll={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} />
 
         {/* ---------- Listings ---------- */}
-        <section id="villas" className="mx-auto max-w-6xl scroll-mt-24 border-t border-line py-12">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-brass">{n("07", lang)} · {t("nav_villas", lang)}</p>
-              <h2 className={`mt-3 text-3xl md:text-4xl ${hc}`}>{t("list_title", lang)}</h2>
-            </div>
-            <p className="num font-mono text-sm text-muted">
-              {n(list.length, lang)} / {n(villas.length, lang)} {t("results", lang)}
-            </p>
-          </div>
-
-          {/* filters */}
-          <div className="mt-8 grid gap-4 rounded-xl border border-line bg-surface p-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.4fr_auto] lg:items-end">
-            <label className="grid gap-1.5" htmlFor="f-area">
-              <span className="text-xs font-medium text-muted">{t("filter_area", lang)}</span>
-              <select id="f-area" value={area} onChange={(e) => setArea(e.target.value as Area | "any")} className="rounded-md border border-line bg-bg px-3 py-2">
-                <option value="any">{t("any", lang)}</option>
-                {areas.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name[lang]}</option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-1.5" htmlFor="f-type">
-              <span className="text-xs font-medium text-muted">{t("filter_type", lang)}</span>
-              <select id="f-type" value={type} onChange={(e) => setType(e.target.value as VillaType | "any")} className="rounded-md border border-line bg-bg px-3 py-2">
-                <option value="any">{t("any", lang)}</option>
-                {TYPES.map((ty) => (
-                  <option key={ty} value={ty}>{t(`type_${ty}` as Key, lang)}</option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-1.5" htmlFor="f-beds">
-              <span className="text-xs font-medium text-muted">{t("filter_beds", lang)}</span>
-              <select id="f-beds" value={beds} onChange={(e) => setBeds(Number(e.target.value))} className="rounded-md border border-line bg-bg px-3 py-2">
-                <option value={0}>{t("any", lang)}</option>
-                {[2, 3, 4, 6].map((b) => (
-                  <option key={b} value={b}>{n(b, lang)}{t("beds_plus", lang)}</option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-1.5" htmlFor="f-budget">
-              <span className="flex justify-between text-xs font-medium text-muted">
-                <span>{t("filter_budget", lang)}</span>
-                <span className="num font-mono text-ink">{usd(budget)}</span>
-              </span>
-              <input id="f-budget" type="range" min={90000} max={MAX_BUDGET} step={10000} value={budget} onChange={(e) => setBudget(Number(e.target.value))} className="py-2" />
-            </label>
-            <label className="flex cursor-pointer items-center gap-2 text-sm lg:pb-2" htmlFor="f-avail">
-              <input id="f-avail" type="checkbox" checked={availableOnly} onChange={(e) => setAvailableOnly(e.target.checked)} className="h-4 w-4 accent-[var(--jade)]" />
-              {t("available_only", lang)}
-            </label>
-          </div>
-
-          {list.length === 0 ? (
-            <div className="mt-8 rounded-xl border border-dashed border-line p-10 text-center">
-              <p className="text-muted">{t("no_results", lang)}</p>
-              <button type="button" onClick={resetFilters} className="mt-4 rounded-md border border-ink px-4 py-2 text-sm">
-                {t("reset", lang)}
-              </button>
-            </div>
-          ) : (
-            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {list.map((v) => {
-                const est = monthlyPayment(v.price * 0.7, 48, 0);
-                return (
-                  <li key={v.id}>
-                    <article className="card-surface group flex h-full flex-col overflow-hidden transition-colors hover:border-jade">
-                      <div className="relative overflow-hidden border-b border-line bg-wall">
-                        <img
-                          src={img(v)}
-                          alt={v.name[lang]}
-                          loading="lazy"
-                          className={`aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${v.status === "sold" ? "opacity-60 grayscale" : ""}`}
-                        />
-                        <div className="absolute left-3 top-3">
-                          <StatusPill status={v.status} lang={lang} />
-                        </div>
-                        <span className="absolute right-3 top-3 rounded-full bg-surface px-2.5 py-0.5 text-xs font-medium text-ink">
-                          {t(`type_${v.type}` as Key, lang)}
-                        </span>
-                      </div>
-                      <div className="flex flex-1 flex-col p-5">
-                        <h3 className={lang === "kh" ? "text-lg font-semibold" : "font-display text-2xl leading-tight"}>{v.name[lang]}</h3>
-                        <p className="text-sm text-muted">{v.location[lang]}</p>
-                        <div className="mt-4">
-                          <p className="num font-display text-3xl leading-none">{usd(v.price)}</p>
-                          {v.status !== "sold" && (
-                            <p className="num mt-1.5 text-xs text-muted">
-                              {t("from_mo", lang)} <span className="font-mono text-ink">{usd(est)}</span>
-                              {t("per_month", lang)}
-                            </p>
-                          )}
-                        </div>
-                        <dl className="num mt-4 grid grid-cols-4 gap-2 border-t border-line pt-4 text-center">
-                          {[
-                            [t("beds", lang), n(v.beds, lang)],
-                            [t("baths", lang), n(v.baths, lang)],
-                            [t("land", lang), `${n(v.landW, lang)}×${n(v.landL, lang)}`],
-                            ["m²", n(v.built, lang)],
-                          ].map(([k, val]) => (
-                            <div key={k}>
-                              <dd className="font-mono text-sm">{val}</dd>
-                              <dt className="mt-0.5 text-[11px] leading-tight text-muted">{k}</dt>
-                            </div>
-                          ))}
-                        </dl>
-                        <button
-                          type="button"
-                          onClick={() => setOpenId(v.id)}
-                          className="mt-5 w-full rounded-md border border-ink px-4 py-2.5 text-sm font-medium transition-colors group-hover:bg-ink group-hover:text-bg"
-                        >
-                          {t("view", lang)}
-                        </button>
-                      </div>
-                    </article>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
+        <VillaListing
+          lang={lang}
+          hc={hc}
+          list={list}
+          area={area}
+          onAreaChange={setArea}
+          type={type}
+          onTypeChange={setType}
+          beds={beds}
+          onBedsChange={setBeds}
+          budget={budget}
+          onBudgetChange={setBudget}
+          maxBudget={MAX_BUDGET}
+          availableOnly={availableOnly}
+          onAvailableOnlyChange={setAvailableOnly}
+          onReset={resetFilters}
+          onOpen={setOpenId}
+        />
 
         <CtaBanner lang={lang} hc={hc} />
         <WelcomeBack lang={lang} villa={lastViewedVilla} onOpen={setOpenId} />
@@ -423,7 +331,7 @@ export default function VillaSite() {
         <LinkDirectory lang={lang} onSelectArea={selectAreaAndBrowse} onSelectType={selectTypeAndBrowse} />
       </main>
 
-      <footer className="mt-8 bg-roof px-4 py-8 text-jade-ink md:px-8">
+      {/* <footer className="mt-8 bg-roof px-4 py-8 text-jade-ink md:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap items-center justify-between gap-6 border-b border-jade-ink/15 pb-6">
             <a href="#top" className="flex items-center rounded-md bg-white px-1.5 py-1">
@@ -443,7 +351,7 @@ export default function VillaSite() {
           </div>
           <p className="mt-2 text-xs opacity-60">{t("footer", lang)}</p>
         </div>
-      </footer>
+      </footer> */}
 
       <FloatingRail lang={lang} />
 
@@ -468,18 +376,34 @@ function VillaDetail({
   onPlan: (id: string) => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const photos = imgs(v);
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    setSlide(0);
+  }, [v.id]);
+
+  useEffect(() => {
+    if (photos.length <= 1) return;
+    const id = setInterval(() => setSlide((i) => (i + 1) % photos.length), 3500);
+    return () => clearInterval(id);
+  }, [v.id, photos.length]);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") setSlide((i) => (i + 1) % photos.length);
+      if (e.key === "ArrowLeft") setSlide((i) => (i - 1 + photos.length) % photos.length);
+    };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
     };
-  }, [onClose]);
+  }, [onClose, photos.length]);
 
   const specs: [string, string][] = [
     [t("land", lang), `${n(v.landW, lang)} × ${n(v.landL, lang)} m (${n(v.landW * v.landL, lang)} m²)`],
@@ -488,8 +412,6 @@ function VillaDetail({
     [t("beds", lang), n(v.beds, lang)],
     [t("baths", lang), n(v.baths, lang)],
     [t("parking", lang), n(v.parking, lang)],
-    [t("title", lang), t(v.title === "hard" ? "title_hard" : "title_strata", lang)],
-    [t("handover", lang), v.handover[lang]],
   ];
 
   return (
@@ -508,8 +430,39 @@ function VillaDetail({
           </button>
         </div>
 
-        <div className="border-b border-line bg-wall">
-          <img src={img(v)} alt={v.name[lang]} className="max-h-[62vh] w-full object-cover" />
+        <div className="relative border-b border-line bg-wall">
+          <img src={photos[slide]} alt={v.name[lang]} className="max-h-[62vh] w-full object-cover" />
+          {photos.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => setSlide((i) => (i - 1 + photos.length) % photos.length)}
+                aria-label="Previous photo"
+                className="absolute left-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={() => setSlide((i) => (i + 1) % photos.length)}
+                aria-label="Next photo"
+                className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70"
+              >
+                ›
+              </button>
+              <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1.5">
+                {photos.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setSlide(i)}
+                    aria-label={`Go to photo ${i + 1}`}
+                    className={`h-1.5 w-1.5 rounded-full ${i === slide ? "bg-white" : "bg-white/50"}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <div className="grid gap-8 p-5 md:grid-cols-[1.2fr_1fr] md:p-8">
@@ -582,7 +535,7 @@ function Contact({ lang, hc }: { lang: Lang; hc: string }) {
       return;
     }
     setError(false);
-    const villa = villas.find((v) => v.id === form.villa)!;
+    const villa = AVATAR_EXTERIOR.find((v) => v.id === form.villa)!;
     const lines = [
       `${t("f_name", lang)}: ${form.name}`,
       `${t("f_phone", lang)}: ${form.phone}`,
@@ -678,7 +631,7 @@ function Contact({ lang, hc }: { lang: Lang; hc: string }) {
               <label className="grid gap-1.5" htmlFor="c-villa">
                 <span className="text-xs font-medium text-muted">{t("f_villa", lang)}</span>
                 <select id="c-villa" value={form.villa} onChange={set("villa")} className={field}>
-                  {villas.filter((v) => v.status !== "sold").map((v) => (
+                  {AVATAR_EXTERIOR.filter((v) => v.status !== "sold").map((v) => (
                     <option key={v.id} value={v.id}>{v.name[lang]}</option>
                   ))}
                 </select>

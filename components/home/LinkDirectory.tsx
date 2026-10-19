@@ -1,5 +1,5 @@
 import { t, type Key } from "@/lib/i18n";
-import { areas, VILLA_TYPES, type Area, type Lang, type VillaType } from "@/lib/villas";
+import { areas, VILLA_TYPES, type Area, type Lang, type VillaType } from "@/lib/avatatr";
 
 type Props = {
   lang: Lang;

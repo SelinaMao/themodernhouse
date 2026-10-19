@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { t } from "@/lib/i18n";
-import { n, usd, villas, type Lang } from "@/lib/villas";
+import { n, usd, AVATAR_EXTERIOR, type Lang } from "@/lib/avatatr";
 
 const DEPOSIT = 5000;
 
@@ -15,7 +15,7 @@ export function monthlyPayment(financed: number, months: number, annualRate: num
 type Props = { lang: Lang; villaId: string; onVillaChange: (id: string) => void; headingClass: string; index?: string };
 
 export default function PaymentPlan({ lang, villaId, onVillaChange, headingClass, index = "02" }: Props) {
-  const villa = villas.find((v) => v.id === villaId) ?? villas[0];
+  const villa = AVATAR_EXTERIOR.find((v) => v.id === villaId) ?? AVATAR_EXTERIOR[0];
   const [price, setPrice] = useState(villa.price);
   const [lastVilla, setLastVilla] = useState(villa.id);
   const [downPct, setDownPct] = useState(30);
@@ -60,7 +60,7 @@ export default function PaymentPlan({ lang, villaId, onVillaChange, headingClass
                 onChange={(e) => onVillaChange(e.target.value)}
                 className="rounded-md border border-line bg-surface px-3 py-2.5"
               >
-                {villas.map((v) => (
+                {AVATAR_EXTERIOR.map((v) => (
                   <option key={v.id} value={v.id} disabled={v.status === "sold"}>
                     {v.name[lang]} — {usd(v.price)}
                     {v.status === "sold" ? ` (${t("status_sold", lang)})` : ""}

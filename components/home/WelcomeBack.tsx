@@ -1,5 +1,5 @@
 import { t } from "@/lib/i18n";
-import { img, usd, type Lang, type Villa } from "@/lib/villas";
+import { img, usd, type Lang, type Villa } from "@/lib/avatatr";
 
 export default function WelcomeBack({ lang, villa, onOpen }: { lang: Lang; villa: Villa | null; onOpen: (id: string) => void }) {
   if (!villa) return null;

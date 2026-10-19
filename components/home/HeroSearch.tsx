@@ -1,5 +1,5 @@
-import { t, type Key } from "@/lib/i18n";
-import { areas, VILLA_TYPES, type Area, type Lang, type VillaType } from "@/lib/villas";
+import { t } from "@/lib/i18n";
+import { areas, type Area, type Lang, type VillaType } from "@/lib/avatatr";
 
 type Props = {
   lang: Lang;
@@ -11,30 +11,15 @@ type Props = {
   onAreaSelect: (a: Area) => void;
 };
 
-export default function HeroSearch({ lang, type, onTypeChange, query, onQueryChange, onSearch, onAreaSelect }: Props) {
+export default function HeroSearch({ lang, query, onQueryChange, onSearch, onAreaSelect }: Props) {
   return (
     <div className="mt-7">
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label={t("filter_type", lang)}>
-        {(["any", ...VILLA_TYPES] as const).map((ty) => (
-          <button
-            key={ty}
-            type="button"
-            role="tab"
-            aria-pressed={type === ty}
-            onClick={() => onTypeChange(ty)}
-            className="chip"
-          >
-            {ty === "any" ? t("tab_all", lang) : t(`type_${ty}` as Key, lang)}
-          </button>
-        ))}
-      </div>
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
           onSearch();
         }}
-        className="mt-3 flex overflow-hidden rounded-md border border-line bg-surface"
+        className="mt-3 flex overflow-hidden rounded-md border border-line bg-surface sm:hidden"
       >
         <input
           id="hero-search"

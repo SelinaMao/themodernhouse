@@ -1,4 +1,4 @@
-import type { Variant } from "@/lib/villas";
+import type { Variant } from "@/lib/avatatr";
 
 type Props = {
   variant: Variant;
