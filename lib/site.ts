@@ -1,6 +1,6 @@
 // Edit these to your own business details.
 export const site = {
-  brand: { kh: "ផ្ទះទំនើប ០១", en: "Modern House 01" },
+  brand: { kh: "Mayur Angkor", en: "Mayur Angkor" },
   // Example contact details — replace with your own
   telegram: "modernhouse01_demo",
   phone: "+855 12 345 678",

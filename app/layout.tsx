@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Modern House 01 — ផ្ទះទំនើប ០១",
-  description: "Modern House 01: single, Queen and King villas and link houses for sale in Phnom Penh.",
+  title: "Mayur Angkor",
+  description: "Mayur Angkor: single, Queen and King villas and link houses for sale in Phnom Penh.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

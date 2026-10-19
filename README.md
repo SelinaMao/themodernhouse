@@ -1,4 +1,4 @@
-# Modern House 01 (ផ្ទះទំនើប ០១) — Next.js + Tailwind villa sales site
+# Mayur Angkor — Next.js + Tailwind villa sales site
 
 Bilingual (ខ្មែរ / English) website for selling villas in Cambodia.
 

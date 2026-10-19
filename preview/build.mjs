@@ -12,7 +12,7 @@ await build({
 execSync("npx @tailwindcss/cli -i app/globals.css -o preview/out.css --minify", { stdio: "inherit" });
 const css = readFileSync("preview/out.css", "utf8");
 const js = readFileSync("preview/out.js", "utf8").replace(/<\/script/gi, "<\\/script");
-const html = `<title>Modern House 01</title>
+const html = `<title>Mayur Angkor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif&family=Kantumruy+Pro:wght@400;500;600&family=Moul&display=swap">
