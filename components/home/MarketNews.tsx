@@ -3,9 +3,9 @@ import { t } from "@/lib/i18n";
 import { IMG_BASE, n, type Lang } from "@/lib/avatatr";
 
 const POSTS = [
-  { title: "news1_title", body: "news1_body", date: "news1_date", image: "villas/07.png" },
-  { title: "news2_title", body: "news2_body", date: "news2_date", image: "villas/09.png" },
-  { title: "news3_title", body: "news3_body", date: "news3_date", image: "villas/14.png" },
+  { title: "news1_title", body: "news1_body", date: "news1_date", image: "villas/07.webp" },
+  { title: "news2_title", body: "news2_body", date: "news2_date", image: "villas/09.webp" },
+  { title: "news3_title", body: "news3_body", date: "news3_date", image: "villas/14.webp" },
 ] as const;
 
 export default function MarketNews({ lang, hc, onSeeAll }: { lang: Lang; hc: string; onSeeAll: () => void }) {
